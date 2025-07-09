@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Relationship Readiness Quiz</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      position: relative;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+    }
+
+    .quiz-overlay, #result-screen {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      display: none;
+      z-index: 10;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .quiz-overlay button, #result-screen button {
+      background: #1e90ff;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+
+    #result-screen h2 {
+      margin-top: 0;
+    }
+
+    .result-image {
+      width: 100px;
+      height: auto;
+      margin: 10px auto;
+    }
+
+    .share-buttons {
+      margin-top: 20px;
+    }
+
+    .share-buttons a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<video id="video" controls>
+  <source src="https://streamable.com/l/kae65w/mp4.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<!-- Questions -->
+<div id="quiz1" class="quiz-overlay">
+  <h2>Question 1: How do you handle conflict?</h2>
+  <button onclick="selectAnswer(3, 'quiz1')">I communicate calmly</button>
+  <button onclick="selectAnswer(2, 'quiz1')">I try but get emotional</button>
+  <button onclick="selectAnswer(1, 'quiz1')">I avoid or explode</button>
+</div>
+
+<div id="quiz2" class="quiz-overlay">
+  <h2>Question 2: Why do you want a relationship?</h2>
+  <button onclick="selectAnswer(3, 'quiz2')">To grow with someone</button>
+  <button onclick="selectAnswer(2, 'quiz2')">To feel less lonely</button>
+  <button onclick="selectAnswer(1, 'quiz2')">To fix something in my life</button>
+</div>
+
+<div id="quiz3" class="quiz-overlay">
+  <h2>Question 3: How do you set boundaries?</h2>
+  <button onclick="selectAnswer(3, 'quiz3')">I state them clearly</button>
+  <button onclick="selectAnswer(2, 'quiz3')">I try but often bend</button>
+  <button onclick="selectAnswer(1, 'quiz3')">I struggle to say no</button>
+</div>
+
+<div id="quiz4" class="quiz-overlay">
+  <h2>Question 4: How do you handle alone time?</h2>
+  <button onclick="selectAnswer(3, 'quiz4')">I enjoy and use it to grow</button>
+  <button onclick="selectAnswer(2, 'quiz4')">I sometimes feel lonely</button>
+  <button onclick="selectAnswer(1, 'quiz4')">I hate being alone</button>
+</div>
+
+<div id="quiz5" class="quiz-overlay">
+  <h2>Question 5: Do you take responsibility in relationships?</h2>
+  <button onclick="selectAnswer(3, 'quiz5')">Yes, fully</button>
+  <button onclick="selectAnswer(2, 'quiz5')">Sometimes</button>
+  <button onclick="selectAnswer(1, 'quiz5')">Rarely</button>
+</div>
+
+<div id="quiz6" class="quiz-overlay">
+  <h2>Question 6: How do you manage jealousy?</h2>
+  <button onclick="selectAnswer(3, 'quiz6')">With self-awareness</button>
+  <button onclick="selectAnswer(2, 'quiz6')">I struggle but try</button>
+  <button onclick="selectAnswer(1, 'quiz6')">It controls me</button>
+</div>
+
+<div id="quiz7" class="quiz-overlay">
+  <h2>Question 7: What do you expect from a partner?</h2>
+  <button onclick="selectAnswer(3, 'quiz7')">Mutual respect and support</button>
+  <button onclick="selectAnswer(2, 'quiz7')">They meet my emotional needs</button>
+  <button onclick="selectAnswer(1, 'quiz7')">They make me feel complete</button>
+</div>
+
+<div id="quiz8" class="quiz-overlay">
+  <h2>Question 8: How do you deal with vulnerability?</h2>
+  <button onclick="selectAnswer(3, 'quiz8')">I'm open and honest</button>
+  <button onclick="selectAnswer(2, 'quiz8')">I open up slowly</button>
+  <button onclick="selectAnswer(1, 'quiz8')">I shut down emotionally</button>
+</div>
+
+<!-- Results -->
+<div id="result-screen">
+  <h2>Your Result</h2>
+  
+  <p id="result-text"></p>
+  <button onclick="location.reload()">Play Again</button>
+  <div class="share-buttons">
+    <p>Share your result:</p>
+    <a href="#" id="fb-share" target="_blank">Facebook</a>
+    <a href="#" id="tw-share" target="_blank">Twitter</a>
+  </div>
+</div>
+
+<script>
+  const video = document.getElementById('video');
+  const resultScreen = document.getElementById('result-screen');
+  const resultText = document.getElementById('result-text');
+  const resultImg = document.getElementById('result-img');
+  const fbShare = document.getElementById('fb-share');
+  const twShare = document.getElementById('tw-share');
+
+  let score = 0;
+  const shown = {
+    quiz1: false, quiz2: false, quiz3: false, quiz4: false,
+    quiz5: false, quiz6: false, quiz7: false, quiz8: false
+  };
+
+  video.addEventListener('timeupdate', () => {
+    if (!shown.quiz1 && video.currentTime >= 5) { showQuiz('quiz1'); }
+    if (!shown.quiz2 && video.currentTime >= 10) { showQuiz('quiz2'); }
+    if (!shown.quiz3 && video.currentTime >= 15) { showQuiz('quiz3'); }
+    if (!shown.quiz4 && video.currentTime >= 20) { showQuiz('quiz4'); }
+    if (!shown.quiz5 && video.currentTime >= 25) { showQuiz('quiz5'); }
+    if (!shown.quiz6 && video.currentTime >= 30) { showQuiz('quiz6'); }
+    if (!shown.quiz7 && video.currentTime >= 35) { showQuiz('quiz7'); }
+    if (!shown.quiz8 && video.currentTime >= 40) { showQuiz('quiz8'); }
+  });
+
+  function showQuiz(id) {
+    video.pause();
+    document.getElementById(id).style.display = 'block';
+    shown[id] = true;
+  }
+
+  function selectAnswer(points, quizId) {
+    score += points;
+    document.getElementById(quizId).style.display = 'none';
+    video.play();
+  }
+
+  video.addEventListener('ended', () => {
+    let result = '';
+  
+    if (score >= 20) {
+      result = "🌟 You are: The Secure Soul – You're self-aware, emotionally intelligent, and ready for love.";
+     
+    } else if (score >= 14) {
+      result = "✨ You are: The Hopeful Heart – You're on your way but have a few things to grow through.";
+     
+    } else {
+      result = "🧩 You are: The Lone Wolf – Focus on personal healing and self-discovery before diving in.";
+     
+    }
+    resultText.innerText = result;
+   
+    resultScreen.style.display = 'block';
+
+    const shareText = encodeURIComponent("I just took the Relationship Readiness Quiz! " + result);
+    fbShare.href = `https://www.facebook.com/sharer/sharer.php?u=https://yourquizsite.com&quote=${shareText}`;
+    twShare.href = `https://twitter.com/intent/tweet?text=${shareText}&url=https://yourquizsite.com`;
+  });
+</script>
+
+</body>
+</html>
