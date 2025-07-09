@@ -3,69 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <title>Relationship Readiness Quiz</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      position: relative;
-    }
+ <style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    position: relative;
+  }
 
-    video {
-      width: 100%;
-      height: auto;
-    }
+  video {
+    width: 100%;
+    height: auto;
+  }
 
+  .quiz-overlay, #result-screen {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 1.5rem;
+    border: 2px solid #fff;
+    border-radius: 1rem;
+    display: none;
+    z-index: 10;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+
+  .quiz-overlay h2, #result-screen h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-overlay button, #result-screen button {
+    background: #1e90ff;
+    border: none;
+    color: white;
+    padding: 1.2rem;
+    margin-top: 1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    width: 100%;
+    transition: background 0.3s ease;
+  }
+
+  .quiz-overlay button:hover, #result-screen button:hover {
+    background: #1c7ed6;
+  }
+
+  #result-text {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+
+  .result-image {
+    width: 100px;
+    height: auto;
+    margin: 10px auto;
+  }
+
+  .share-buttons {
+    margin-top: 20px;
+  }
+
+  .share-buttons a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
     .quiz-overlay, #result-screen {
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.9);
-      padding: 20px;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      display: none;
-      z-index: 10;
-      width: 80%;
-      max-width: 500px;
-      text-align: center;
+      padding: 1rem;
+      top: 5%;
+    }
+
+    .quiz-overlay h2, #result-screen h2 {
+      font-size: 1.3rem;
     }
 
     .quiz-overlay button, #result-screen button {
-      background: #1e90ff;
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      margin-top: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      display: block;
-      width: 100%;
+      font-size: 1rem;
+      padding: 1rem;
     }
 
-    #result-screen h2 {
-      margin-top: 0;
-    }
-
-    .result-image {
-      width: 100px;
-      height: auto;
-      margin: 10px auto;
-    }
-
-    .share-buttons {
-      margin-top: 20px;
+    #result-text {
+      font-size: 1rem;
     }
 
     .share-buttons a {
-      color: #fff;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
+      font-size: 1rem;
     }
-  </style>
+  }
+</style>
 </head>
 <body>
 
